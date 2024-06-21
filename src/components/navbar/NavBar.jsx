@@ -6,20 +6,29 @@ import {
 import { MdOutlineAccountCircle } from "react-icons/md";
 import { FaMoneyBillAlt } from "react-icons/fa";
 import { Icon as IconComponent } from "./Icon";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 
 export const NavBar = () => {
   const navigate = useNavigate();
-  const [activeIcon, setActiveIcon] = useState("home");
+  const [activeIcon, setActiveIcon] = useState(
+    () => localStorage.getItem("activeIcon") || "home"
+  );
+  const [isLoggedIn, setIsLoggedIn] = useState(null);
 
-  const handleIconClick = (name) => {
-    setActiveIcon(name.toLowerCase());
-    if (name !== "Home") {
-      navigate(`/${name.toLowerCase()}`);
-    } else {
-      navigate("/");
-    }
+  useEffect(() => {
+    const token = localStorage.getItem("isLoggedIn");
+    setIsLoggedIn(token);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("activeIcon", activeIcon);
+  }, [activeIcon]);
+
+  const handleLogOut = () => {
+    localStorage.removeItem("isLoggedIn");
+    setIsLoggedIn(false);
+    navigate("/");
   };
 
   return (
@@ -39,7 +48,10 @@ export const NavBar = () => {
                   icon={IoHomeOutline}
                   name="Home"
                   active={activeIcon === "home"}
-                  onClick={() => handleIconClick("Home")}
+                  onClick={() => {
+                    navigate("/");
+                    setActiveIcon("home");
+                  }}
                 />
               </div>
 
@@ -49,15 +61,23 @@ export const NavBar = () => {
                     icon={MdOutlineAccountCircle}
                     name="Account"
                     active={activeIcon === "account"}
-                    onClick={() => handleIconClick("Account")}
+                    onClick={() => {
+                      isLoggedIn ? navigate("Account") : navigate("/sign-in");
+                      setActiveIcon("account");
+                    }}
                   />
                 </li>
                 <li>
                   <IconComponent
                     icon={FaMoneyBillAlt}
                     name="Transfer"
-                    active={activeIcon === "transfer money"}
-                    onClick={() => handleIconClick("Transfer money")}
+                    active={activeIcon === "transfer credit"}
+                    onClick={() => {
+                      isLoggedIn
+                        ? navigate("transfer-credit")
+                        : navigate("/sign-in");
+                      setActiveIcon("transfer credit");
+                    }}
                   />
                 </li>
                 <li>
@@ -65,7 +85,10 @@ export const NavBar = () => {
                     icon={IoSettingsOutline}
                     name="Settings"
                     active={activeIcon === "settings"}
-                    onClick={() => handleIconClick("Settings")}
+                    onClick={() => {
+                      isLoggedIn ? navigate("settings") : navigate("/sign-in");
+                      setActiveIcon("settings");
+                    }}
                   />
                 </li>
               </ul>
@@ -79,7 +102,7 @@ export const NavBar = () => {
               icon={IoLogOutOutline}
               name="Logout"
               active={activeIcon === "logout"}
-              onClick={() => handleIconClick("Logout")}
+              onClick={() => handleLogOut()}
             />
           </form>
         </div>

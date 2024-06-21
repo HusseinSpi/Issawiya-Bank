@@ -2,8 +2,11 @@ import { MdOutlineAlternateEmail } from "react-icons/md";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { AddUser } from "../../api/APIUsers";
+import { useNavigate } from "react-router-dom";
 
 export const SignUpForm = () => {
+  const navigate = useNavigate();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -18,6 +21,8 @@ export const SignUpForm = () => {
       toast.error("Passwords do not match");
       return;
     }
+    await AddUser(firstName, lastName, phoneNumber, email, password);
+    navigate("/sign-in");
   };
 
   const handleShowPassword = () => {
