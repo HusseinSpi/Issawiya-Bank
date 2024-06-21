@@ -84,6 +84,7 @@ export const Login = async (email, password) => {
       if (user.email === email && user.password === password) {
         localStorage.setItem("isLoggedIn", true);
         localStorage.setItem("email", email);
+        toast.success("Logged in successfully");
         return true;
       }
     }
@@ -100,7 +101,7 @@ export const InMoney = async (email, money) => {
     for (let i = 0; i < users.length; i++) {
       const user = users[i];
       if (user.email === email) {
-        user.money += money;
+        user.money += money * 1;
         const response = await axios.put(
           `https://6675c254a8d2b4d072f15d62.mockapi.io/users/${user.id}`,
           user,
@@ -111,14 +112,14 @@ export const InMoney = async (email, money) => {
           }
         );
         if (response.status === 200) {
-          toast.success("Money added successfully");
+          return true;
         } else {
-          toast.error("Couldn't add money");
+          return false;
         }
       }
     }
   } catch (error) {
-    toast.error("Couldn't add money");
+    return false;
   }
 };
 
@@ -139,14 +140,14 @@ export const OutMoney = async (email, money) => {
           }
         );
         if (response.status === 200) {
-          toast.success("Money added successfully");
+          return true;
         } else {
-          toast.error("Couldn't add money");
+          return false;
         }
       }
     }
   } catch (error) {
-    toast.error("Couldn't add money");
+    return false;
   }
 };
 
@@ -167,14 +168,14 @@ export const InCredit = async (email, credit) => {
           }
         );
         if (response.status === 200) {
-          toast.success("credit added successfully");
+          return true;
         } else {
-          toast.error("Couldn't add credit");
+          return false;
         }
       }
     }
   } catch (error) {
-    toast.error("Couldn't add credit");
+    return false;
   }
 };
 
@@ -195,13 +196,13 @@ export const OutCredit = async (email, credit) => {
           }
         );
         if (response.status === 200) {
-          toast.success("credit added successfully");
+          return true;
         } else {
-          toast.error("Couldn't add credit");
+          return false;
         }
       }
     }
   } catch (error) {
-    toast.error("Couldn't add credit");
+    return false;
   }
 };

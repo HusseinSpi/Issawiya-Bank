@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { getUser } from "../../api/APIUsers";
+import { useNavigate } from "react-router-dom";
 
 export const Account = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState(null);
   const [account, setAccount] = useState(null);
 
@@ -73,6 +75,13 @@ export const Account = () => {
           </dd>
         </div>
       </dl>
+
+      <button
+        onClick={() => navigate("/transfer-money")}
+        className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-10"
+      >
+        Transfer
+      </button>
     </div>
   );
 };
