@@ -62,7 +62,7 @@ export const NavBar = () => {
                     name="Account"
                     active={activeIcon === "account"}
                     onClick={() => {
-                      isLoggedIn ? navigate("Account") : navigate("/sign-in");
+                      isLoggedIn ? navigate("account") : navigate("/sign-in");
                       setActiveIcon("account");
                     }}
                   />
