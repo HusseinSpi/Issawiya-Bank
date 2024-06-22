@@ -9,6 +9,7 @@ import { Account } from "./pages/account/Account";
 import { TransferCreditPage } from "./pages/transferCredit/TransferCreditPage";
 import { TransferCredit } from "./pages/transferCredit/TransferCredit";
 import { TransferMoney } from "./pages/transferMoney/TransferMoney";
+import { AdminPanel } from "./pages/Admin/AdminPanel";
 
 const routes = [
   {
@@ -42,6 +43,10 @@ const routes = [
       {
         path: "/transfer-credit/:id",
         element: <TransferCredit />,
+      },
+      {
+        path: "/admin-panel",
+        element: <AdminPanel />,
       },
       {
         path: "*",

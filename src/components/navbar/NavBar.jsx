@@ -1,25 +1,22 @@
-import {
-  IoHomeOutline,
-  IoSettingsOutline,
-  IoLogOutOutline,
-} from "react-icons/io5";
+import { IoHomeOutline, IoLogOutOutline } from "react-icons/io5";
 import { MdOutlineAccountCircle } from "react-icons/md";
 import { FaMoneyBillAlt } from "react-icons/fa";
+import { RiAdminLine } from "react-icons/ri";
 import { Icon as IconComponent } from "./Icon";
 import { useState, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export const NavBar = () => {
   const navigate = useNavigate();
   const [activeIcon, setActiveIcon] = useState(
     () => localStorage.getItem("activeIcon") || "home"
   );
-  const [isLoggedIn, setIsLoggedIn] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(() =>
+    localStorage.getItem("isLoggedIn")
+  );
 
-  useEffect(() => {
-    const token = localStorage.getItem("isLoggedIn");
-    setIsLoggedIn(token);
-  }, []);
+  const [isAdmin, setIsAdmin] = useState(() => localStorage.getItem("isAdmin"));
 
   useEffect(() => {
     localStorage.setItem("activeIcon", activeIcon);
@@ -28,6 +25,10 @@ export const NavBar = () => {
   const handleLogOut = () => {
     localStorage.removeItem("isLoggedIn");
     setIsLoggedIn(false);
+    localStorage.removeItem("isAdmin");
+    setIsAdmin(false);
+    setActiveIcon("home");
+    toast.success("Logged out successfully");
     navigate("/");
   };
 
@@ -82,12 +83,18 @@ export const NavBar = () => {
                 </li>
                 <li>
                   <IconComponent
-                    icon={IoSettingsOutline}
-                    name="Settings"
-                    active={activeIcon === "settings"}
+                    icon={RiAdminLine}
+                    name="Admin panel"
+                    active={activeIcon === "admin-panel"}
                     onClick={() => {
-                      isLoggedIn ? navigate("settings") : navigate("/sign-in");
-                      setActiveIcon("settings");
+                      isLoggedIn
+                        ? isAdmin
+                          ? navigate("/admin-panel")
+                          : toast.error(
+                              "You are not allowed to view this panel"
+                            )
+                        : navigate("/sign-in");
+                      setActiveIcon("admin-panel");
                     }}
                   />
                 </li>

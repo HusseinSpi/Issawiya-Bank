@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { InCredit, OutCredit, getUser } from "../../api/APIUsers";
+import { getUser } from "../../api/APIUsers";
+import { InCredit, OutCredit } from "../../hooks/EditCredit";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

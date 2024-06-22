@@ -1,11 +1,7 @@
 import { useState, useEffect } from "react";
-import {
-  InMoney,
-  OutCredit,
-  getUser,
-  OutMoney,
-  InCredit,
-} from "../../api/APIUsers";
+import { getUser } from "../../api/APIUsers";
+import { InCredit, OutCredit } from "../../hooks/EditCredit";
+import { InMoney, OutMoney } from "../../hooks/EditMoney";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
