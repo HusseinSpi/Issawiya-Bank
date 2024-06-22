@@ -16,6 +16,7 @@ export const SingInForm = () => {
     if (await Login(email, password)) {
       toast.success("Login Successful");
       navigate("/account");
+      window.location.reload();
     } else {
       toast.error("Login Failed");
     }
