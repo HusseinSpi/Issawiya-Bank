@@ -28,19 +28,19 @@ const routes = [
         element: <SignUpPage />,
       },
       {
-        path: "account",
+        path: "/account",
         element: <Account />,
       },
       {
-        path: "transfer-credit",
+        path: "/transfer-credit",
         element: <TransferCreditPage />,
       },
       {
-        path: "transfer-money",
+        path: "/transfer-money",
         element: <TransferMoney />,
       },
       {
-        path: "transfer-credit/:id",
+        path: "/transfer-credit/:id",
         element: <TransferCredit />,
       },
       {
