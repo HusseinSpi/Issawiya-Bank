@@ -37,7 +37,7 @@ export const TransferCreditPage = () => {
         <div className="mb-4 relative">
           <input
             type="text"
-            placeholder="Name, username, email, mobile"
+            placeholder="username, email"
             className="w-full p-2 border border-gray-300 rounded-lg"
             value={searchTerm}
             onChange={handleSearch}
